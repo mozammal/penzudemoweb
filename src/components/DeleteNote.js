@@ -11,10 +11,8 @@ const DeleteNote = props => {
     variables: {
       id: props.noteId
     },
-    // refetch the note list queries to update the cache
     refetchQueries: [{ query: GET_MY_NOTES, GET_NOTES }],
     onCompleted: data => {
-      // redirect the user to the "my notes" page
       props.history.push('/mynotes');
     }
   });

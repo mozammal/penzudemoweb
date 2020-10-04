@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Header from './Header';
 import Navigation from './Navigation';
 
-// component styles
 const Wrapper = styled.div`
   /* We can apply media query styles within the styled component */
   /* This will only apply the layout for screens above 700px wide */

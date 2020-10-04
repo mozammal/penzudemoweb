@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.svg';
-import { useQuery } from '@apollo/client';
-import { Link, withRouter } from 'react-router-dom';
+import {useQuery} from '@apollo/client';
+import {Link, withRouter} from 'react-router-dom';
 
 import ButtonAsLink from './ButtonAsLink';
-import { IS_LOGGED_IN } from '../gql/query';
+import {IS_LOGGED_IN} from '../gql/query';
 
 const HeaderBar = styled.header`
   width: 100%;
@@ -30,39 +30,33 @@ const UserState = styled.div`
 `;
 
 const Header = props => {
-  // query hook for user logged in state
-  const { data, client } = useQuery(IS_LOGGED_IN);
+    const {data, client} = useQuery(IS_LOGGED_IN);
 
-  return (
-    <HeaderBar>
-      <img src={logo} alt="Notedly Logo" height="40" />
-      <LogoText>Online Diary</LogoText>
-      {/* If logged in display a log out link, else display sign in options */}
-      <UserState>
-        {data.isLoggedIn ? (
-          <ButtonAsLink
-            onClick={() => {
-              // remove the token
-              localStorage.removeItem('token');
-              // clear the application's cache
-              client.resetStore();
-              // update local state
-              client.writeData({ data: { isLoggedIn: false } });
-              // redirect the user to the homepage
-              props.history.push('/');
-            }}
-          >
-            Logout
-          </ButtonAsLink>
-        ) : (
-          <p>
-            <Link to={'/signin'}>Sign In</Link> or{' '}
-            <Link to={'/signup'}>Sign Up</Link>
-          </p>
-        )}
-      </UserState>
-    </HeaderBar>
-  );
+    return (
+        <HeaderBar>
+            <img src={logo} alt="Notedly Logo" height="40"/>
+            <LogoText>Online Diary</LogoText>
+            <UserState>
+                {data.isLoggedIn ? (
+                    <ButtonAsLink
+                        onClick={() => {
+                            localStorage.removeItem('token');
+                            client.resetStore();
+                            client.writeData({data: {isLoggedIn: false}});
+                            props.history.push('/');
+                        }}
+                    >
+                        Logout
+                    </ButtonAsLink>
+                ) : (
+                    <p>
+                        <Link to={'/signin'}>Sign In</Link> or{' '}
+                        <Link to={'/signup'}>Sign Up</Link>
+                    </p>
+                )}
+            </UserState>
+        </HeaderBar>
+    );
 };
 
 export default withRouter(Header);
